@@ -119,6 +119,11 @@ namespace OpenAI_Test
 
         }
 
+        public static Dictionary<string, object> getConfig()
+        {
+            return config;
+        }
+
 
     }
 }

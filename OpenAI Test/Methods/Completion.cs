@@ -40,7 +40,7 @@ namespace OpenAI_Test.Methods
             while (!stop)
             {
                 Console.Write("Ich: ");
-                Task task =  WebRequest.createCompletionAPIRequest(api_key, Console.ReadLine().Replace("Ich: ", ""));
+                Task task = WebRequest.createCompletionAPIRequest(api_key, Console.ReadLine().Replace("Ich: ", ""), Program.getConfig());
                 while (!task.IsCompleted)
                     Program.block();
                 //Console.WriteLine("Task complete");

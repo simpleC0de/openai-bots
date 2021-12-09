@@ -12,22 +12,32 @@ namespace OpenAI_Test
 {
     class WebRequest
     {
-        public static async Task<bool> createCompletionAPIRequest(string api_key, string question)
+        public static async Task<bool> createCompletionAPIRequest(string api_key, string question, Dictionary<string, object> config)
         {
 
             try
             {
-                Dictionary<string, object> requestBody = new Dictionary<string, object>
-            {
-                {"prompt", question },
-                {"temperature", 0.5 },
-                {"max_tokens", 50 },
-                {"top_p", 1 },
-                {"frequency_penalty", 0 },
-                {"presence_penalty", 1 },
-                {"stop", "\n" }
-            };
+                Dictionary<string, object> requestBody = new Dictionary<string, object>();
+                try
+                {
+                    requestBody = new Dictionary<string, object>
+                {
+                    {"prompt", question },
+                    {"temperature", Math.Round(double.Parse(config["temperature"].ToString()), 1) },
+                    {"max_tokens", int.Parse(config["max_tokens"].ToString()) },
+                    {"top_p", Math.Round(double.Parse(config["top_p"].ToString()), 1) },
+                    {"frequency_penalty", Math.Round(double.Parse(config["frequency_penalty"].ToString()), 1) },
+                    {"presence_penalty", Math.Round(double.Parse(config["presence_penalty"].ToString()), 1) },
+                    {"stop", "\n" }
+                };
 
+                }
+                catch (Exception)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Error reading config\nCheck the config, or replace with original one and restart the application");
+                    System.Threading.Thread.Sleep(5000);
+                }
 
                 string myJson = JsonConvert.SerializeObject(requestBody);
 
@@ -45,7 +55,11 @@ namespace OpenAI_Test
 
                     // Parsing the returned JSON object of the POST request
                     JObject obj = JObject.Parse(response.Content.ReadAsStringAsync().Result);
-
+                    
+                    //This prints the whole respond message
+                    //Console.WriteLine(obj.ToString());
+                    
+                    
                     // Deserializing the body to get access to the 'text' property
                     Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(obj.ToString());
 
@@ -57,6 +71,8 @@ namespace OpenAI_Test
             catch(Exception ex)
             {
                 Console.WriteLine(ex.StackTrace);
+                Console.WriteLine("Press Enter to close");
+                Console.ReadLine();
                 return false;
             }
 
