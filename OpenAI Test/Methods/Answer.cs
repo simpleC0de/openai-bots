@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace OpenAI_Test.Methods
 {
-    class Completion
+    class Answer
     {
-
-        private static bool stop = false;
+        static bool stop = false;
 
         public static async Task startAsync(string api_key)
         {
@@ -48,6 +47,5 @@ namespace OpenAI_Test.Methods
                 System.GC.Collect();
             }
         }
-
     }
 }

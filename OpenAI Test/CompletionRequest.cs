@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace OpenAI_Test
 {
-    class WebRequest
+    class CompletionRequest
     {
-        public static async Task<bool> createCompletionAPIRequest(string api_key, string question, Dictionary<string, object> config)
+        public static async Task<bool> createApiRequest(string api_key, string question, Dictionary<string, object> config)
         {
 
             try
